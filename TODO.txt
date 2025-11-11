@@ -1,2 +1,3 @@
 L'OCR-extractor dev'essere in grado di estrapolare informazioni dai documenti italiani quali Carta d'Identità elettronica e cartacea, Codice Fiscale e Passaporto.
 Deve quindi utilizzare le best practices in uso.
+Attualmente non riesce a leggere ne I Base64 derivanti da jpg nei le immagini jpg o png, restituisce tutti i valori "null".

@@ -1,0 +1,2 @@
+L'OCR-extractor dev'essere in grado di estrapolare informazioni dai documenti italiani quali Carta d'Identità elettronica e cartacea, Codice Fiscale e Passaporto.
+Deve quindi utilizzare le best practices in uso.

@@ -102,7 +102,7 @@ async def health_check():
 
 
 @app.post("/api/carta-identita")
-async def extract_carta_identita(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = Body(None)):
+async def extract_carta_identita(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = None):
     """
     Estrae dati da una Carta d'Identità
 
@@ -112,12 +112,14 @@ async def extract_carta_identita(file: Optional[UploadFile] = File(None), data: 
     """
     try:
         logger.info(f"Richiesta carta-identita - file: {file is not None}, data: {data is not None}")
+        if data:
+            logger.info(f"data object: {data}")
 
         if file:
             # Caso 1: File upload
             logger.info(f"Processando file upload: {file.filename}")
             result = await process_file_upload(file, carta_extractor)
-        elif data:
+        elif data and data.base64:
             # Caso 2: Base64
             logger.info(f"Processando Base64 (lunghezza: {len(data.base64)} caratteri)")
             result = carta_extractor.extract_data({'base64': data.base64})
@@ -131,7 +133,11 @@ async def extract_carta_identita(file: Optional[UploadFile] = File(None), data: 
             "data": result
         })
 
+    except HTTPException:
+        # Re-raise HTTPException to let FastAPI handle them properly
+        raise
     except Exception as e:
+        logger.exception("Errore durante l'elaborazione della richiesta")
         return JSONResponse(
             status_code=500,
             content={
@@ -143,7 +149,7 @@ async def extract_carta_identita(file: Optional[UploadFile] = File(None), data: 
 
 
 @app.post("/api/codice-fiscale")
-async def extract_codice_fiscale(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = Body(None)):
+async def extract_codice_fiscale(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = None):
     """
     Estrae e valida un Codice Fiscale
 
@@ -153,11 +159,13 @@ async def extract_codice_fiscale(file: Optional[UploadFile] = File(None), data: 
     """
     try:
         logger.info(f"Richiesta codice-fiscale - file: {file is not None}, data: {data is not None}")
+        if data:
+            logger.info(f"data object: {data}")
 
         if file:
             logger.info(f"Processando file upload: {file.filename}")
             result = await process_file_upload(file, cf_extractor)
-        elif data:
+        elif data and data.base64:
             logger.info(f"Processando Base64 (lunghezza: {len(data.base64)} caratteri)")
             result = cf_extractor.extract_data({'base64': data.base64})
         else:
@@ -170,7 +178,11 @@ async def extract_codice_fiscale(file: Optional[UploadFile] = File(None), data: 
             "data": result
         })
 
+    except HTTPException:
+        # Re-raise HTTPException to let FastAPI handle them properly
+        raise
     except Exception as e:
+        logger.exception("Errore durante l'elaborazione della richiesta")
         return JSONResponse(
             status_code=500,
             content={
@@ -182,7 +194,7 @@ async def extract_codice_fiscale(file: Optional[UploadFile] = File(None), data: 
 
 
 @app.post("/api/passaporto")
-async def extract_passaporto(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = Body(None)):
+async def extract_passaporto(file: Optional[UploadFile] = File(None), data: Optional[Base64Request] = None):
     """
     Estrae dati da un Passaporto
 
@@ -193,11 +205,13 @@ async def extract_passaporto(file: Optional[UploadFile] = File(None), data: Opti
     """
     try:
         logger.info(f"Richiesta passaporto - file: {file is not None}, data: {data is not None}")
+        if data:
+            logger.info(f"data object: {data}")
 
         if file:
             logger.info(f"Processando file upload: {file.filename}")
             result = await process_file_upload(file, passaporto_extractor)
-        elif data:
+        elif data and data.base64:
             logger.info(f"Processando Base64 (lunghezza: {len(data.base64)} caratteri)")
             result = passaporto_extractor.extract_data({'base64': data.base64})
         else:
@@ -210,7 +224,11 @@ async def extract_passaporto(file: Optional[UploadFile] = File(None), data: Opti
             "data": result
         })
 
+    except HTTPException:
+        # Re-raise HTTPException to let FastAPI handle them properly
+        raise
     except Exception as e:
+        logger.exception("Errore durante l'elaborazione della richiesta")
         return JSONResponse(
             status_code=500,
             content={

@@ -1,0 +1,27 @@
+# API Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Validazione dati
+pydantic==2.5.0
+
+# OCR e Image Processing
+pytesseract==0.3.10
+Pillow==10.1.0
+opencv-python==4.8.1.78
+numpy==1.26.2
+
+# PDF Processing (opzionale, per convertire PDF in immagini)
+pdf2image==1.16.3
+# Nota: pdf2image richiede poppler-utils installato nel sistema
+# Su Ubuntu/Debian: sudo apt-get install poppler-utils
+# Su macOS: brew install poppler
+
+# Utilities
+python-dateutil==2.8.2
+
+# Tesseract OCR deve essere installato nel sistema:
+# Ubuntu/Debian: sudo apt-get install tesseract-ocr tesseract-ocr-ita
+# macOS: brew install tesseract tesseract-lang
+# Windows: scarica installer da https://github.com/UB-Mannheim/tesseract/wiki

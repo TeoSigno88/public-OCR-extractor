@@ -577,6 +577,7 @@ class PassaportoExtractor(BaseExtractor):
                 # Numero passaporto (posizioni 0-8)
                 result['numero_passaporto'] = line2[0:9].replace('<', '').strip()
 
+                # Check digit passaporto (posizione 9)
                 # Nazione (posizioni 10-12)
                 result['cittadinanza'] = line2[10:13].replace('<', '').strip()
 
